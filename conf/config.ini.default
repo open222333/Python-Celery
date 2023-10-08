@@ -13,3 +13,6 @@
 
 # 輸出log等級 預設為 WARNING
 ; LOG_LEVEL=
+
+# (用於開關任務)tasks json設定檔位置 預設為 conf/tasks.json
+; TASKS_JSON_PATH
