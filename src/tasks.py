@@ -4,9 +4,13 @@ from datetime import datetime
 
 @celery.task
 def print_time():
-    print(f'現在時間: {datetime.now()}')
+    msg = f'現在時間: {datetime.now()}'
+    print(msg)
+    return msg
 
 
 @celery.task
 def add_num(x, y):
-    print(f'{x} + {y} = {x + y}')
+    ans = f'{x} + {y} = {x + y}'
+    print(ans)
+    return ans
