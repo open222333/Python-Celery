@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+# from kombu import Exchange, Queue
 from celery import Celery
 import json
 import os
@@ -32,14 +33,23 @@ celery = Celery(
     include=['src.tasks'],  # 包含任務定義的模組
 )
 
+# CELERY_DEFAULT_QUEUE = 'default'
+# CELERY_QUEUES = (
+#     Queue('default', Exchange('default'), routing_key='default'),
+#     Queue('queue1', Exchange('queue1'), routing_key='queue1'),
+#     Queue('queue2', Exchange('queue2'), routing_key='queue2'),
+#     # 其他佇列...
+# )
+
 # celery 配置
 celery.conf.update(
-    CELERY_TASK_SERIALIZER='json',
-    CELERY_RESULT_SERIALIZER='json',
     CELERY_ACCEPT_CONTENT=['json'],
-    CELERY_TRACK_STARTED=True,
     CELERY_DISABLE_RATE_LIMITS=True,
-    ENABLE_UTC=True,
+    CELERY_DEFAULT_QUEUE='default',
+    CELERY_REDIRECT_STDOUTS_LEVEL=LOG_LEVEL,
+    CELERY_RESULT_SERIALIZER='json',
+    CELERY_TASK_SERIALIZER='json',
     CELERY_TIMEZONE=CELERY_TIMEZONE,
-    CELERY_REDIRECT_STDOUTS_LEVEL=LOG_LEVEL
+    CELERY_TRACK_STARTED=True,
+    ENABLE_UTC=True,
 )
