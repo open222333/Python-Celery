@@ -53,7 +53,6 @@ celery = Celery(
     include=['src.tasks'],  # 包含任務定義的模組
 )
 
-# CELERY_DEFAULT_QUEUE = 'default'
 # CELERY_QUEUES = (
 #     Queue('default', Exchange('default'), routing_key='default'),
 #     Queue('queue1', Exchange('queue1'), routing_key='queue1'),

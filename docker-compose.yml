@@ -23,23 +23,48 @@ services:
     hostname: beat
     volumes:
       - .:/usr/src/app
-    command: bash -c 'celery -A main beat'
+    command: bash -c 'celery -A main beat --loglevel=info'
     env_file:
       - conf/celery.env
-    depends_on:
-      - worker
-  worker:
+  worker0:
     image: python_image
-    hostname: worker
-    container_name: worker
+    hostname: worker0
+    container_name: worker0
     volumes:
       - .:/usr/src/app
-    command: bash -c 'celery -A main worker'
+    command: bash -c 'celery -A main worker --loglevel=info'
     env_file:
       - conf/celery.env
     depends_on:
       - redis
       - mongo
+      - beat
+  worker1:
+    image: python_image
+    hostname: worker1
+    container_name: worker1
+    volumes:
+      - .:/usr/src/app
+    command: bash -c 'celery -A main worker --loglevel=info -Q queue1'
+    env_file:
+      - conf/celery.env
+    depends_on:
+      - redis
+      - mongo
+      - beat
+  worker2:
+    image: python_image
+    hostname: worker2
+    container_name: worker2
+    volumes:
+      - .:/usr/src/app
+    command: bash -c 'celery -A main worker --loglevel=info -Q queue2'
+    env_file:
+      - conf/celery.env
+    depends_on:
+      - redis
+      - mongo
+      - beat
   flower:
     image: python_image
     hostname: flower
@@ -49,5 +74,3 @@ services:
       - conf/celery.env
     ports:
       - "5555:5555"
-    depends_on:
-      - worker
