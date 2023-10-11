@@ -1,6 +1,7 @@
 from configparser import ConfigParser
 # from kombu import Exchange, Queue
 from celery import Celery
+from logging import disable
 import json
 import os
 
@@ -14,7 +15,26 @@ CELERY_BACKEND = conf.get('BASIC', 'CELERY_BACKEND', fallback='mongodb://mongo:2
 CELERY_TIMEZONE = conf.get('BASIC', 'CELERY_TIMEZONE', fallback='Asia/Taipei')
 
 # log設定
+# 輸出log等級 預設為 WARNING
 LOG_LEVEL = conf.get('BASIC', 'LOG_LEVEL', fallback='WARNING')
+
+# 關閉log功能 輸入選項 (true, True, 1) 預設 不關閉
+LOG_DISABLE = conf.getboolean('BASIC', 'LOG_DISABLE', fallback=False)
+
+# 關閉紀錄log檔案 輸入選項 (true, True, 1)  預設 關閉
+LOG_FILE_DISABLE = conf.getboolean('BASIC', 'LOG_FILE_DISABLE', fallback=True)
+
+# logs路徑 預設 logs
+LOG_PATH = conf.get('BASIC', 'LOG_PATH', fallback='logs')
+
+# 關閉log功能
+if LOG_DISABLE:
+    disable()
+else:
+    # logs 放置資料夾
+    if not LOG_FILE_DISABLE:
+        if os.path.exists(LOG_PATH):
+            os.makedirs(LOG_PATH)
 
 # tasks json設定檔位置
 TASKS_JSON_PATH = conf.get('BASIC', 'TASKS_JSON_PATH', fallback=os.path.join('conf', 'tasks.json'))

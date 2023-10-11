@@ -1,18 +1,27 @@
 [BASIC]
-# celery溝通 預設  redis://redis:6379/0
-# Celery 代理（消息中間件）的 URL。
-# 這告訴 Celery 在哪裡查找和儲存任務。
+; celery溝通 預設  redis://redis:6379/0
+; Celery 代理（消息中間件）的 URL。
+; 這告訴 Celery 在哪裡查找和儲存任務。
 ; CELERY_BROKER=
 
-# 結果存入位置 預設 mongodb://mongo:27017/celery.result
+; 結果存入位置 預設 mongodb://mongo:27017/celery.result
 ; CELERY_BACKEND=
 
-# 時區設置 預設 Asia/Taipei
-# https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+; 時區設置 預設 Asia/Taipei
+; https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 ; CELERY_TIMEZONE=
 
-# 輸出log等級 預設為 WARNING
+; 輸出log等級 預設為 WARNING
 ; LOG_LEVEL=
 
-# (用於開關任務)tasks json設定檔位置 預設為 conf/tasks.json
+; 關閉log功能 輸入選項 (true, True, 1) 預設 不關閉
+; LOG_DISABLE=1
+
+; logs路徑 預設 logs
+; LOG_PATH=
+
+; 關閉紀錄log檔案 輸入選項 (true, True, 1)  預設 不關閉
+; LOG_FILE_DISABLE=1
+
+; (用於開關任務)tasks json設定檔位置 預設為 conf/tasks.json
 ; TASKS_JSON_PATH
