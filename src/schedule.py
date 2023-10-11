@@ -10,7 +10,7 @@ if task_name in TASKS.keys():
     if TASKS[task_name]['execute']:
         CELERYBEAT_SCHEDULE[task_name] = {
             'task': 'src.tasks.print_time',
-            'schedule': timedelta(seconds=1)  # 每 1 秒執行一次
+            'schedule': timedelta(seconds=5)  # 每 1 秒執行一次
         }
 
         if TASKS[task_name]['queue']:

@@ -13,11 +13,11 @@ logger.set_msg_handler()
 def print_time():
     msg = f'現在時間: {datetime.now()}'
     logger.info(msg)
-    return msg
+    return {'data': msg}
 
 
 @celery.task
 def add_num(x, y):
-    ans = f'{x} + {y} = {x + y}'
+    ans = x + y
     logger.info(ans)
-    return ans
+    return {'data': ans}
