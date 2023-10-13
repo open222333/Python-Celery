@@ -2,3 +2,4 @@ celery==5.3.4
 flower==2.0.1
 pymongo==4.5.0
 redis==4.6.0
+requests==2.31.0

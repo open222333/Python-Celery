@@ -2,6 +2,7 @@ from configparser import ConfigParser
 # from kombu import Exchange, Queue
 from celery import Celery
 from logging import disable
+import requests
 import json
 import os
 
@@ -72,3 +73,19 @@ celery.conf.update(
     CELERY_TRACK_STARTED=True,
     ENABLE_UTC=True,
 )
+
+
+# Telegram Bot 的 API 金鑰
+TELEGRAM_API_KEY = conf.get('TELEGRAM', 'TELEGRAM_API_KEY', fallback=None)
+
+# Telegram 使用者的 Chat ID
+CREATE_CHAT_ID = None
+if not TELEGRAM_API_KEY:
+    response = requests.get(f'https://api.telegram.org/bot{TELEGRAM_API_KEY}/getUpdates')
+    data = response.json()
+    try:
+        CREATE_CHAT_ID = data['result'][0]['message']['chat']['id']
+    except Exception as err:
+        CREATE_CHAT_ID = None
+
+TELEGRAM_CHAT_ID = conf.get('TELEGRAM', 'TELEGRAM_CHAT_ID', fallback=CREATE_CHAT_ID)
